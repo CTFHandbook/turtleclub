@@ -6,6 +6,9 @@ public class Main {
     public static void main(String[] args) {
 
        TurtleClub clawboi = new TurtleClub();
+       String name = "Kyle";
+       //clawboi.
+
        //ArrayList<Motor> x = new ArrayList<Motor>(5);
        //System.out.println(x.size());
        // boolean[] test = new boolean[5];

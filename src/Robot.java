@@ -2,26 +2,68 @@ import java.util.*;
 
 public interface Robot {
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    Description: A class to represent a subsystem For example, wheels, claw ect... A robot can have any amount of
+    subsystems. They will just need to create a new class for each subsystem since the subsystem class is abstract. The
+    only function that needs to be implemented in the new class is CommandCheck(). A subsystem also has an arbitrary
+    amount of motors associated with them.
+
+    Member Variables: ArrayList<Motor> - contains all the motors for each subsystem.
+
+                      String name - self explanatory
+
+                      boolean status - self explanatory
+
+    Member functions: void deplete() - each command takes away some charge.
+
+                      double getCharge() - self explanatory
+
+                      void setCharge(double) - self explanatory
+
+                      boolean GetStatus() - self explanatory
+
+                      void SetStatus(boolean) - self explanatory
+     */
     abstract class Subsystem {
+
+        //Member Variables
         public ArrayList<Motor> motors = new ArrayList<>();
         public String name;
         public boolean status;
 
-
+        //Getters and Setters
         public boolean GetStatus(){ return MotorStatus() && this.status; }
         public void SetStatus(boolean _status){ this.status = _status; }
         public int GetMotorCount(){ return motors.size(); }
 
-        public Subsystem(){}
+        //Constructors
+        public Subsystem(){
+            //Always starts out as false.
+            this.status=false;
+        }
         public Subsystem(String _name, int _motors){
             this.name=_name;
             for(int i=0; i<_motors; i++){
                 Motor motor = new Motor();
                 motors.add(motor);
             }
+            //Always starts out as false
+            this.status=false;
         }
+
+        /*
+        Description: Used to check if a command sent from controller.SendCommand is valid. Different per subsystem
+        Parameters: 1. _command = The command pre-seperated on spaces.
+         */
         public abstract boolean CommandCheck(String[] _command);
 
+        /*
+        Description: Used to tie into the overall status on the subsystem. THe whole subsystem status is false if one
+                     motor status is false.
+        Parameters: None
+         */
         public boolean MotorStatus(){
             boolean temp=false;
             for(int i=0; i<motors.size();i++) {
